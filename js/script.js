@@ -16,6 +16,9 @@ FSJS project 2 - List Filter and Pagination
    will only be used inside of a function, then it can be locally 
    scoped to that function.
 ***/
+const studentList = document.querySelector('ul').children;
+const qtyPerPage = 10;
+
 
 
 
@@ -34,16 +37,58 @@ FSJS project 2 - List Filter and Pagination
        that will be passed into the parens later when you call or 
        "invoke" the function 
 ***/
+function showPage(list, page) {
+   const startIndex = (page * qtyPerPage) - qtyPerPage;
+   const endIndex = (page * qtyPerPage);
+   for (let i = 0; i < list.length; i += 1) {
+      if (i >= startIndex && i <endIndex) {
+         list[i].style.display = '';
+      } else {
+         list[i].style.display = 'none';
+      }
+   }
 
+}
 
+showPage(studentList, 6);
 
 
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
+const appendPageLinks = (list) => {
+   
+   // 1. Detetmine how many pages are needed for the list by dividing the total number of list items by the max number of items per page
+   const numPages = Math.ceil(list.length / qtyPerPage);
+   // 2. Create a div, give it the 'pagination' class, and append it to the .page div
+   const pageDiv = document.querySelector('.page');
+   const pagiantionDiv = document.createElement('div');
+   pagiantionDiv.className = 'pagination';
+   pageDiv.appendChild(pagiantionDiv);
 
+   // 3. Add a ul to the 'pagination' div to store the pagination links
+   const ul = document.createElement('ul');
+   pagiantionDiv.appendChild(ul);
+   // 4. for every page, add li and a tags with the page number text
+   for (let i = 1; i <= numPages; i += 1){
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.textContent = `${i}`;
+      ul.appendChild(li);
+      li.appendChild(a);
+   }
+   // 5. Add an event listener to each a tag. When they are clicked call the showPage function to display the appropriate page
+   ul.addEventListener('click', (e) => {
+      const pageTo = e.target;
+      showPage(studentList, pageTo.textContent);
+   })
+   // 6. Loop over the pagiantion links to remove active class from all links
 
+   // 7. Add the active class to the link we just clicked. You can identify that clicked link using event.target
+   
+}
+appendPageLinks(studentList);
 
 
 
