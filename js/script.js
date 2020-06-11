@@ -132,16 +132,4 @@ input.addEventListener('keyup', (e) =>{
    }
 })
 
-/*
-   const newList = [];
-   for (let i = 0; i < studentList.length; i+= 1){
-      if (input.value.length !== 0 & studentList[i].children[0].children[1].textContent.toLowerCase().includes(input.value.toLowerCase())) {
-         newList.push(studentList[i]);
-      } else {
-         studentList[i].style.display = 'none';
-      }
-      
-   }*/
-
-// showPage(newList, 1);
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
