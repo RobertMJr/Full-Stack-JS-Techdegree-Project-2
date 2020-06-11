@@ -96,8 +96,10 @@ function appendSearchBar () {
    const input = document.createElement('input');
    input.placeholder = 'Search for students...';
    const searchButton = document.createElement('button');
+   const paragraph = document.createElement('p');
    searchButton.textContent = 'Search';
    headerDiv.appendChild(studentSearchDiv);
+   studentSearchDiv.appendChild(paragraph);
    studentSearchDiv.appendChild(input);
    studentSearchDiv.appendChild(searchButton);
 
@@ -108,6 +110,7 @@ appendPageLinks(studentList);
 appendSearchBar();
 
 const input = document.querySelector('input');
+const button = document.querySelector('button');
 function searchStudent (student, studentsList) {
    const newList = [];
    for (let i = 0; i < studentsList.length; i +=1 ){
@@ -120,14 +123,54 @@ function searchStudent (student, studentsList) {
    return newList;
 } 
 
+button.addEventListener('click', () => {
+   const result = searchStudent(input, studentList);
+   const pagination = document.querySelector('.pagination');
+   const paragraph = document.querySelector('.student-search').firstChild;
+   if (input.value === '') {
+      showPage(studentList, 1);
+      if (pagination) {
+         pagination.remove();
+      }
+      paragraph.textContent = '';
+      appendPageLinks(studentList)
+   } else if (result.length === 0) {
+      if (pagination) {
+         pagination.remove();
+      }
+      paragraph.textContent = 'No results found';
+   } else {
+      showPage(result, 1);
+      if (pagination) {
+         pagination.remove();
+      }
+      paragraph.textContent = '';
+      appendPageLinks(result);
+   }
+})
+
 input.addEventListener('keyup', (e) =>{
    const result = searchStudent(e.target, studentList);
-   if (result.length === 0) {
+   const pagination = document.querySelector('.pagination');
+   const paragraph = document.querySelector('.student-search').firstChild;
+   if (e.target.value === '') {
       showPage(studentList, 1);
-   } else{
+      if (pagination) {
+         pagination.remove();
+      }
+      paragraph.textContent = '';
+      appendPageLinks(studentList)
+   } else if (result.length === 0) {
+      if (pagination) {
+         pagination.remove();
+      }
+      paragraph.textContent = 'No results found';
+   } else {
       showPage(result, 1);
-      const pagination = document.querySelector('.pagination');
-      pagination.remove();
+      if (pagination) {
+         pagination.remove();
+      }
+      paragraph.textContent = '';
       appendPageLinks(result);
    }
 })
