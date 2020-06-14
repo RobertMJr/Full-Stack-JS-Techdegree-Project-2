@@ -28,6 +28,10 @@ function showPage(list, page) {
    It also provides functionality for the created links to allow navigation through the list items via clicks.
 */
 const appendPageLinks = (list) => {
+   const pagination = document.querySelector('.pagination');
+   if (pagination) {
+      pagination.remove();
+   }
    /* Creating a variable numPages that calculates how many pages are needed for displaying the list. 
       Calculation is done by dividing the total number of list items by the max number of items per page. 
    */
@@ -85,6 +89,8 @@ function appendSearchBar () {
    input.placeholder = 'Search for students...';
    const searchButton = document.createElement('button');
    const paragraph = document.createElement('p');
+   paragraph.style.display = 'inline';
+   paragraph.style.marginRight = '20px';
    searchButton.textContent = 'Search';
    headerDiv.appendChild(studentSearchDiv);
    studentSearchDiv.appendChild(paragraph);
@@ -125,7 +131,6 @@ button.addEventListener('click', () => {
       Select the first child of the element wiht the className 'student-search' and assign it to a variable named 'paragraph'.
    */
    const result = searchStudent(input, studentList);
-   const pagination = document.querySelector('.pagination');
    const paragraph = document.querySelector('.student-search').firstChild;
    /* Handling the possible scenarios.
          If the search value is empty:
@@ -140,21 +145,13 @@ button.addEventListener('click', () => {
    */
    if (input.value === '') {
       showPage(studentList, 1);
-      if (pagination) {
-         pagination.remove();
-      }
+
       paragraph.textContent = '';
       appendPageLinks(studentList)
    } else if (result.length === 0) {
-      if (pagination) {
-         pagination.remove();
-      }
       paragraph.textContent = 'No results found';
    } else {
       showPage(result, 1);
-      if (pagination) {
-         pagination.remove();
-      }
       paragraph.textContent = '';
       appendPageLinks(result);
    }
@@ -165,25 +162,15 @@ button.addEventListener('click', () => {
 */
 input.addEventListener('keyup', () =>{
    const result = searchStudent(input, studentList);
-   const pagination = document.querySelector('.pagination');
    const paragraph = document.querySelector('.student-search').firstChild;
    if (input.value === '') {
       showPage(studentList, 1);
-      if (pagination) {
-         pagination.remove();
-      }
       paragraph.textContent = '';
       appendPageLinks(studentList)
    } else if (result.length === 0) {
-      if (pagination) {
-         pagination.remove();
-      }
       paragraph.textContent = 'No results found';
    } else {
       showPage(result, 1);
-      if (pagination) {
-         pagination.remove();
-      }
       paragraph.textContent = '';
       appendPageLinks(result);
    }
