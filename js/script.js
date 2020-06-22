@@ -145,7 +145,6 @@ button.addEventListener('click', () => {
    */
    if (input.value === '') {
       showPage(studentList, 1);
-
       paragraph.textContent = '';
       appendPageLinks(studentList)
    } else if (result.length === 0) {
